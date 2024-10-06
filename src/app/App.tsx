@@ -2,22 +2,28 @@ import { Button, Typography } from '@mui/material';
 import { Box, Container, Stack } from '@mui/system';
 import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
-import  {About} from "./screen/About";
-import  {Users} from "./screen/Users";
+import { HomePage } from './screen/homePage';
 import '../css/app.css';
+import { ProductsPage } from './screen/productsPage';
+import { UserPage } from './screen/userPage';
+import { OrderPage } from './screen/ordersPage';
+
 
 function App() {
   return <div>
   <nav>
     <ul>
       <li>
-        <Link to="/">Home</Link>
+        <Link to="/products">ProductsPage</Link>
       </li>
       <li>
-        <Link to="/about">About</Link>
+        <Link to="/orders">OrdersPage</Link>
       </li>
       <li>
-        <Link to="/users">Users</Link>
+        <Link to="/member-page">UsersPage</Link>
+      </li>
+      <li>
+        <Link to="/">HomePage</Link>
       </li>
     </ul>
   </nav>
@@ -25,21 +31,22 @@ function App() {
   {/* A <Switch> looks through its children <Route>s and
       renders the first one that matches the current URL. */}
   <Switch>
-    <Route path="/about">
-      <About />
+    <Route path="/products">
+      <ProductsPage />
     </Route>
-    <Route path="/users">
-      <Users />
+    <Route path="/member-page">
+      <UserPage />
+    </Route>
+    <Route path="/orders">
+      <OrderPage />
     </Route>
     <Route path="/">
-      <Home />
+      <HomePage/>
     </Route>
   </Switch>
 </div>
 }
 
-function Home() {
-  return <Container>Home</Container>;
-}
+
 
 export default App;
