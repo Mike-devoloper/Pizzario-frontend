@@ -1,5 +1,5 @@
 import { Container } from "@mui/system";
 
-export function OrderPage() {
+export default function OrderPage() {
     return <Container>OrderPage</Container>
 }
