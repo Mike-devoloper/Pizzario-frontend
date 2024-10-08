@@ -1,35 +1,22 @@
 import { Button, Typography } from '@mui/material';
 import { Box, Container, Stack } from '@mui/system';
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch, useLocation } from 'react-router-dom';
 import { HomePage } from './screen/homePage';
 import '../css/app.css';
 import { ProductsPage } from './screen/productsPage';
 import { UserPage } from './screen/userPage';
 import { OrderPage } from './screen/ordersPage';
+import { HomeNavbar } from './components/headers/HomeNavbar';
+import { OtherNavbar } from './components/headers/OtherNavbar';
+import { Footer } from './components/headers/footer';
 
 
 function App() {
-  return <div>
-  <nav>
-    <ul>
-      <li>
-        <Link to="/products">ProductsPage</Link>
-      </li>
-      <li>
-        <Link to="/orders">OrdersPage</Link>
-      </li>
-      <li>
-        <Link to="/member-page">UsersPage</Link>
-      </li>
-      <li>
-        <Link to="/">HomePage</Link>
-      </li>
-    </ul>
-  </nav>
-
-  {/* A <Switch> looks through its children <Route>s and
-      renders the first one that matches the current URL. */}
+  const location = useLocation();
+  
+  return <>
+  {location.pathname === "/" ? <HomeNavbar/> : <OtherNavbar/>}
   <Switch>
     <Route path="/products">
       <ProductsPage />
@@ -44,7 +31,8 @@ function App() {
       <HomePage/>
     </Route>
   </Switch>
-</div>
+  <Footer/>
+</>
 }
 
 
