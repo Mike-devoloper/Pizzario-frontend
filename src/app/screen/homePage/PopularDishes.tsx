@@ -4,12 +4,9 @@ import CardCover from '@mui/joy/CardCover';
 import {CssVarsProvider}  from "@mui/joy/styles"
 import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
-import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import { Box, Container, Stack } from "@mui/material";
 import { DescriptionOutlined, Visibility } from "@mui/icons-material";
 import CardOverflow from "@mui/joy/CardOverflow";
-import Divider from "@mui/joy/Divider";
-import AspectRatio from "@mui/joy/AspectRatio";
 
 
 const list = [
