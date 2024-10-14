@@ -12,6 +12,7 @@ import Footer  from './components/headers/footer';
 import '../css/app.css';
 import '../css/navbar.css';
 import '../css/footer.css';
+import '../css/product.css';
 
 function App() {
   const location = useLocation();
