@@ -13,6 +13,7 @@ import '../css/app.css';
 import '../css/navbar.css';
 import '../css/footer.css';
 import '../css/product.css';
+import HelpPage from './screen/helpPage';
 
 function App() {
   const location = useLocation();
@@ -28,6 +29,9 @@ function App() {
     </Route>
     <Route path="/orders">
       <OrderPage />
+    </Route>
+    <Route path="/help">
+      <HelpPage/>
     </Route>
     <Route path="/">
       <HomePage/>
