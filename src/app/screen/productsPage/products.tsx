@@ -30,7 +30,7 @@ const returantImg = [
 ];
 
 
-export default function ChosenProducts() {
+export default function Products() {
   return (
     <div className={"products"}>
       <Container>
@@ -205,10 +205,8 @@ export default function ChosenProducts() {
         <Container>
           <Stack className={"address-area"}>
             <Box className={"address-title"}>Our address</Box>
-            <iframe
-              src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Andijan%20,%20Uzbekistan+(Burak%20Restaurant)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d23689.91567597953!2d129.0983372261603!3d35.13155182662586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2skr!4v1728896516279!5m2!1sen!2skr"  
+            referrerPolicy="no-referrer-when-downgrade"></iframe>
           </Stack>
         </Container>
       </div>
