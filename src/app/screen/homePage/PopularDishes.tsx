@@ -25,7 +25,6 @@ const PopularDishesRetriever = createSelector(retrieverPopularDishes,
 
 export default function PopularDishes() {
     const {popularDishes} = useSelector(PopularDishesRetriever)
-    console.log("popularDishes => ", popularDishes);
     return (
     <div className="popular-dishes-frame">
         <Container>
