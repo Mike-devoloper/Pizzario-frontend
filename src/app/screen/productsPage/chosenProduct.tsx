@@ -29,7 +29,7 @@ const restaurantRetriever = createSelector(retrieveRestaurant, (restaurant) => (
 }))
 
 export default function ChosenProduct() {
-  return (
+  return (      
     <div className={"chosen-product"}>
       <Box className={"title"}>Product Detail</Box>
       <Container className={"product-container"}>
