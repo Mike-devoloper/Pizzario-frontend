@@ -10,6 +10,18 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { CssVarsProvider } from "@mui/joy/styles";
 import Card from "@mui/joy/Card";
+import { Product } from "../../../lib/data/types/product";
+import { setProducts } from "./slice";
+import { Dispatch } from '@reduxjs/toolkit';
+import {createSelector} from "reselect";
+import { retrieveProducts } from "./selector";
+
+const actionDispatch = (dispatch:Dispatch) => ({
+  setProducts: (data: Product[]) => dispatch(setProducts(data))
+});
+const productsRetriever = createSelector(retrieveProducts, (products) => ({
+  products
+}))
 
 const products = [
   { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
