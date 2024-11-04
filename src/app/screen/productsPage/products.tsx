@@ -11,7 +11,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { CssVarsProvider } from "@mui/joy/styles";
 import Card from "@mui/joy/Card";
 import { Product, ProductInquiry } from "../../../lib/data/types/product";
-import { setProducts } from "./slice";
+import { setChosenProduct, setProducts, setRestaurant } from "./slice";
 import { Dispatch } from '@reduxjs/toolkit';
 import {createSelector} from "reselect";
 import { retrieveProducts } from "./selector";
@@ -19,8 +19,9 @@ import ProductService from "../../services/ProductService";
 import { ProductCollection } from "../../../lib/data/enums/product.enums";
 import { useDispatch, useSelector,} from "react-redux";
 import { serverApi } from "../../../lib/data/config";
-import ProductsPage from ".";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import MemberService from "../../services/MemberService";
+import { Member } from "../../../lib/data/types/member";
 
 const actionDispatch = (dispatch:Dispatch) => ({
   setProducts: (data: Product[]) => dispatch(setProducts(data))
@@ -57,14 +58,14 @@ export default function Products() {
   }, [productSearch]);
 
   const [searchText, setSearchProduct] = useState<string>("")
-  const history = useHistory();
+  
 
   useEffect(() => {
     if(searchText === "") productSearch.search = ""
     setProductSearch({...productSearch});
   }, [searchText])
 
-
+  
   const searchCollectionHandler = (collection: ProductCollection) => {
     productSearch.page = 1
     productSearch.productCollection = collection
@@ -92,7 +93,7 @@ export default function Products() {
     const handlePageChange = (page:number) => {
       setSelectedPage(page);
     };
-
+    const history = useHistory();
     const chosenProductHandler = (id: string) => {
       history.push(`/products/${id}`)
     }

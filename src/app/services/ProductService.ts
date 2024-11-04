@@ -22,7 +22,21 @@ class ProductService {
             console.log("ERR => GET PRODUCTS", err);
             return [];
         }
+
     }
+
+    public async  getProduct(productId:string):Promise<Product> {
+        try {
+            const url = `${this.path}/product/${productId}`
+            const result = await axios.get(url, {withCredentials: true})
+            return result.data;
+        } catch (err) {
+            console.log("ERROR on getPRoduct service ", err)
+            throw err
+        }
+    }
+
+    
 }
 
 export default ProductService;
