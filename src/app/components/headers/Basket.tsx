@@ -4,6 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Menu from "@mui/material/Menu";
 import CancelIcon from "@mui/icons-material/Cancel";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/data/types/search";
@@ -11,10 +12,14 @@ import { serverApi } from "../../../lib/data/config";
 
 interface BasketProps {
   cartItems: CartItem[];
+  onAdd: (item:CartItem) => void
+  onRemove: (item:CartItem) => void
+  onDelete: (item:CartItem) => void
+  onDeleteAll: () => void
 }
 
 export default function Basket(props:BasketProps ) {
-  const {cartItems} = props;
+  const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = props;
   const authMember = null;
   const history = useHistory();
 
@@ -28,7 +33,9 @@ export default function Basket(props:BasketProps ) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const itemPrice: number = cartItems.reduce((a: number, c: CartItem) => a + c.price*c.quantity, 0)
+  const shippingCost: number = itemPrice < 100 ? 5 : 0;
+  const totalPrice = (shippingCost + itemPrice).toFixed(1);
   return (
     <Box className={"hover-line"}>
       <IconButton
@@ -80,7 +87,16 @@ export default function Basket(props:BasketProps ) {
       >
         <Stack className={"basket-frame"}>
           <Box className={"all-check-box"}>
-            {cartItems.length === 0 ? (<div>Cart is empty!</div>) : (<div>Cart Products:</div>)}
+            {cartItems.length === 0 ? (<div>Cart is empty!</div>) : (
+            <Stack flexDirection={"row"}>
+              <div>Cart Products:</div>
+              <DeleteForeverIcon 
+              sx={{ml: "5px", cursor: "pointer"}}
+              color={"primary"}
+              onClick={() => onDeleteAll()}
+              />
+            </Stack>
+            )}
           </Box>
 
           <Box className={"orders-main-wrapper"}>
@@ -89,7 +105,7 @@ export default function Basket(props:BasketProps ) {
                 const imagePath = `${serverApi}/${item.image}`
                 return (
                   <Box className={"basket-info-box"}>
-                  <div className={"cancel-btn"}>
+                  <div onClick={() => onDelete(item)} className={"cancel-btn"}>
                     <CancelIcon color={"primary"} />
                   </div>
                   <img src={imagePath} className={"product-img"} />
@@ -97,8 +113,8 @@ export default function Basket(props:BasketProps ) {
                   <p className={"product-price"}>${item.price} x {item.quantity}</p>
                   <Box sx={{ minWidth: 120 }}>
                     <div className="col-2">
-                      <button className="remove">-</button>{" "}
-                      <button className="add">+</button>
+                      <button onClick={() => onRemove(item)} className="remove">-</button>{" "}
+                      <button onClick={() => onAdd(item)} className="add">+</button>
                     </div>
                   </Box>
                 </Box>
@@ -106,12 +122,14 @@ export default function Basket(props:BasketProps ) {
               })}
             </Box>
           </Box>
-          <Box className={"basket-order"}>
-            <span className={"price"}>Total: $100 (98 +2)</span>
-            <Button startIcon={<ShoppingCartIcon />} variant={"contained"}>
-              Order
-            </Button>
-          </Box>
+          {cartItems.length === 0 ? "" : (
+             <Box className={"basket-order"}>
+             <span className={"price"}>Total: ${totalPrice} ({itemPrice} +{shippingCost})</span>
+             <Button startIcon={<ShoppingCartIcon />} variant={"contained"}>
+               Order
+             </Button>
+           </Box>
+          )}
         </Stack>
       </Menu>
     </Box>
