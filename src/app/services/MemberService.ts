@@ -1,6 +1,7 @@
+import { ArrowRightAlt } from "@mui/icons-material";
 import axios from "axios";
 import { serverApi } from "../../lib/data/config";
-import { Member } from "../../lib/data/types/member";
+import { Member, MemberInput } from "../../lib/data/types/member";
 
 
 class MemberService {
@@ -32,6 +33,20 @@ class MemberService {
         } catch (err) {
             console.log("ERROR on getRestaurant ", err)
             throw err
+        }
+    }
+
+    public async signup(input: MemberInput): Promise<Member> {
+        try {
+            const url = this.path + "/member/signup"
+            const result = await axios.post(url, input, {withCredentials: true})
+            const member: Member = result.data.member;
+            console.log(member);
+            localStorage.setItem("memberData", JSON.stringify(member));
+            return member;
+        } catch(err) {
+            console.log("ERROR on signup ", err)
+            throw  err;
         }
     }
 }

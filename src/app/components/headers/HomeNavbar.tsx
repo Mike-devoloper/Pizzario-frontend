@@ -10,10 +10,13 @@ interface HomeNavbarProps {
   onRemove: (item:CartItem) => void
   onDelete: (item:CartItem) => void
   onDeleteAll: () => void
+  setLoginOpen: (isOpen: boolean) => void
+  setSignupOpen: (isOpen: boolean) => void
 }
 export default function HomeNavbar (props: HomeNavbarProps) {
   const authMember = null;
-  const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = props;
+  const {cartItems, onAdd, onRemove, onDelete, onDeleteAll, setSignupOpen, setLoginOpen} = props;
+
   return <div className="home-navbar">
     <Container className="home-container">
       <Stack className="menu">
@@ -45,7 +48,7 @@ export default function HomeNavbar (props: HomeNavbarProps) {
           <Basket cartItems={cartItems} onAdd={onAdd} onDelete={onDelete} onRemove={onRemove} onDeleteAll={onDeleteAll}/>
         {!authMember ? 
         (<Box>
-          <Button variant="contained" className="login-button">Login</Button>
+          <Button variant="contained" className="login-button" onClick={() => setLoginOpen(true)}>Login</Button>
           </Box>) : (
             <img 
             className="user-avatar"
@@ -66,7 +69,7 @@ export default function HomeNavbar (props: HomeNavbarProps) {
             {!authMember ? 
             (<Button 
             variant="contained" 
-            className="signup-button">SIGN UP</Button>
+            className="signup-button" onClick={() => setSignupOpen(true)}>SIGN UP</Button>
             ) : null}
           </Box>
         </Stack>

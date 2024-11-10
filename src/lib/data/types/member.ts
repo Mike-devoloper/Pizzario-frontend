@@ -21,10 +21,10 @@ export interface MemberInput {
     memberNick: string;
     memberPhone: string;
     memberPassword: string;
-    memberAddress: string;
-    memberDesc: string;
-    memberImage: string; 
-    memberPoints: number;
+    memberAddress?: string;
+    memberDesc?: string;
+    memberImage?: string; 
+    memberPoints?: number;
 }
 
 
