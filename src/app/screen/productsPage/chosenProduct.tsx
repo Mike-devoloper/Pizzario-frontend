@@ -21,6 +21,7 @@ import MemberService from "../../services/MemberService";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { serverApi } from "../../../lib/data/config";
+import { CartItem } from "../../../lib/data/types/search";
 
 const actionDispatch = (dispatch:Dispatch) => ({
   setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
@@ -34,8 +35,12 @@ const restaurantRetriever = createSelector(retrieveRestaurant, (restaurant) => (
   restaurant,
 }))
 
+interface ChosenProductsProps {
+  onAdd: (item: CartItem) => void
+}
 
-export default function ChosenProduct() {
+
+export default function ChosenProduct(props: ChosenProductsProps) {
 
   const {productId} = useParams<{productId: string}>()
   const {restaurant} = useSelector(restaurantRetriever)
@@ -51,6 +56,8 @@ export default function ChosenProduct() {
       console.log("ERROR on getRestaurant ", err)})
   }, [])
   if(!chosenProduct) return null;
+
+  const{onAdd} = props;
   return (      
     <div className={"chosen-product"}>
       <Box className={"title"}>Product Detail</Box>

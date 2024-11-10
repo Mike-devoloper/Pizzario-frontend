@@ -22,6 +22,7 @@ import { serverApi } from "../../../lib/data/config";
 import { useHistory, useParams } from "react-router-dom";
 import MemberService from "../../services/MemberService";
 import { Member } from "../../../lib/data/types/member";
+import { CartItem } from "../../../lib/data/types/search";
 
 const actionDispatch = (dispatch:Dispatch) => ({
   setProducts: (data: Product[]) => dispatch(setProducts(data))
@@ -29,6 +30,10 @@ const actionDispatch = (dispatch:Dispatch) => ({
 const productsRetriever = createSelector(retrieveProducts, (products) => ({
   products
 }))
+
+interface ProductsProps {
+  onAdd: (item:CartItem) => void
+}
 
 
 const returantImg = [
@@ -39,7 +44,7 @@ const returantImg = [
 ];
 
 
-export default function Products() {
+export default function Products(props: ProductsProps) {
   const {setProducts} = actionDispatch(useDispatch())
   const {products} = useSelector(productsRetriever)
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
@@ -97,7 +102,7 @@ export default function Products() {
     const chosenProductHandler = (id: string) => {
       history.push(`/products/${id}`)
     }
-
+    const {onAdd} = props;
   return (
     <div className={"products"}>
       <Container>
@@ -216,7 +221,20 @@ export default function Products() {
                         sx={{ backgroundImage: `url(${imagePath})`}}
                       >
                         <div className={"product-sale"}>{sizeVolume}</div>
-                        <Button className={"shop-btn"}>
+                        <Button 
+                        className={"shop-btn"}
+                        onClick={(e) => {
+                          console.log("BUTTON PRESSED")
+                          onAdd({
+                            _id: product._id,
+                            quantity: 1,
+                            name: product.productName,
+                            price: product.productPrice,
+                            image: product.productImages[0]
+                          })
+                          e.stopPropagation()
+                        }}
+                        >
                           <img
                             src={"/icons/shopping-cart.svg"}
                             style={{ display: "flex" }}

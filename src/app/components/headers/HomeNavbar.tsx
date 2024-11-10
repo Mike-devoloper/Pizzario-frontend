@@ -3,10 +3,13 @@ import { Box } from "@mui/system";
 import { NavLink } from "react-router-dom";
 import Basket from "./Basket";
 import React, {useState, useEffect} from "react"
-
-export default function HomeNavbar () {
+import { CartItem } from "../../../lib/data/types/search";
+interface HomeNavbarProps {
+  cartItems: CartItem[]
+}
+export default function HomeNavbar (props: HomeNavbarProps) {
   const authMember = null;
-
+  const {cartItems} = props;
   return <div className="home-navbar">
     <Container className="home-container">
       <Stack className="menu">
@@ -35,7 +38,7 @@ export default function HomeNavbar () {
         <Box className={"hover-line"}>
           <NavLink to="/help" activeClassName={"underline"}>Help</NavLink>
         </Box>
-          <Basket/>
+          <Basket cartItems={cartItems}/>
         {!authMember ? 
         (<Box>
           <Button variant="contained" className="login-button">Login</Button>
