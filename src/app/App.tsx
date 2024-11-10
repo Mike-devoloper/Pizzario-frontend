@@ -9,18 +9,27 @@ import OrderPage  from './screen/ordersPage';
 import  HomeNavbar  from './components/headers/HomeNavbar';
 import  OtherNavbar from './components/headers/OtherNavbar';
 import Footer  from './components/headers/footer';
-import '../css/app.css';
-import '../css/navbar.css';
-import '../css/footer.css';
-import '../css/product.css';
 import HelpPage from './screen/helpPage';
 import Test from "./screen/Test"
 import { CartItem } from '../lib/data/types/search';
 import useBasket from './hooks/useBasket';
+import AuthenticationModal from './components/auth';
+import '../css/app.css';
+import '../css/navbar.css';
+import '../css/footer.css';
+import '../css/product.css';
 
 function App() {
   const location = useLocation();
   const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = useBasket()
+  const [signupOpen, setSignupOpen] = useState<boolean>(false);
+  const [loginOpen, setLoginOpen] = useState<boolean>(false);
+
+  /*HANDLER */
+
+  const handleSignupClose = () => setSignupOpen(false)
+  const handleLoginClose = () => setLoginOpen(false)
+
   return <>
   {location.pathname === "/" ? 
   <HomeNavbar cartItems={cartItems} onAdd={onAdd} onDelete={onDelete} onRemove={onRemove} onDeleteAll={onDeleteAll}/> :
@@ -43,6 +52,13 @@ function App() {
     </Route>
   </Switch>
   <Footer/>
+
+  <AuthenticationModal
+    signupOpen={signupOpen}
+    loginOpen={loginOpen}
+    handleLoginClose={handleLoginClose}
+    handleSignupClose={handleSignupClose}
+  />
 </>
 }
 
