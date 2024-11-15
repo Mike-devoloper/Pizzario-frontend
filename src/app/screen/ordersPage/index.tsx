@@ -16,6 +16,7 @@ import { OrderStatus } from "../../../lib/data/enums/order.enums";
 import OrderService from "../../services/OrderService";
 import { createSelector } from "reselect";
 import { retrieverPausedOrder } from "./selector";
+import { useGlobals } from "../../hooks/useGlobals";
 
 
 
@@ -34,6 +35,7 @@ const actionDispatch = (dispatch: Dispatch) => ({
 export default function OrderPage() {
     const {setPausedOrder, setProccesOrder, setFinishedOrder} = actionDispatch(useDispatch())
     const [value, setValue] = useState("1")
+    const {orderBuilder} = useGlobals()
     const handleChange = (e: SyntheticEvent, newValue: string) => {
         setValue(newValue)
     }
@@ -63,7 +65,7 @@ export default function OrderPage() {
             console.log("error on getmyorder", err)
         }) 
 
-    }, [orderInquiry])
+    }, [orderInquiry, orderBuilder])
     /*Handler */
 
     return (
@@ -86,8 +88,8 @@ export default function OrderPage() {
                             </Box>
                         </Box>
                         <Stack className={"order-main-content"}>
-                            <PausedOrders/>
-                            <ProcessOrders/>
+                            <PausedOrders setValue={setValue}/>
+                            <ProcessOrders setValue={setValue}/>
                             <FinishedOrders/>
                         </Stack>
                     </TabContext>

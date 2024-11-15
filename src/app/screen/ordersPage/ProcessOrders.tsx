@@ -6,18 +6,48 @@ import moment from "moment"
 import { retrieverProccesOrder } from "./selector";
 import { createSelector } from "reselect"
 import { useSelector } from "react-redux"
-import { Order, OrderItem } from "../../../lib/data/types/order"
-import { serverApi } from "../../../lib/data/config"
+import { Order, OrderItem, OrderUpdateInput } from "../../../lib/data/types/order"
+import { Messages, serverApi } from "../../../lib/data/config"
 import { Product } from "../../../lib/data/types/product"
+import { useGlobals } from "../../hooks/useGlobals"
+import { OrderStatus } from "../../../lib/data/enums/order.enums"
+import OrderService from "../../services/OrderService"
+import { T } from "../../../lib/data/types/common"
+import { sweetErrorHandling } from "../../../lib/data/sweetAlert"
 
 
 
 const proccesOrderRetriver = createSelector(retrieverProccesOrder,
     (proccesOrder) => ({proccesOrder}))
+    interface ProccesOrderProps {
+        setValue: (input:string) => void
+    }
 
 
-export default function ProcessOrders() {
+
+export default function ProcessOrders(props: ProccesOrderProps) {
     const {proccesOrder} = useSelector(proccesOrderRetriver)
+    const {authMember, setOrderBuilder} = useGlobals()
+    const {setValue} = props;
+
+    //handler 
+    const proccesOrderHandler = async (e:T) => {
+        try {
+            if(!authMember) throw new Error(Messages.error2)
+            //Payment Procces
+            const orderId = e.target.value;
+            const input: OrderUpdateInput = {orderId: orderId, orderStatus: OrderStatus.FINISH}
+            const confirmation = window.confirm("Have you received your order ?")
+            if(confirmation) {
+                const order = new OrderService()
+                await order.updateOrder(input)
+                setValue("3")
+                setOrderBuilder(new Date())
+            }
+        } catch(err) {
+            console.log(console.log("Delete Order => "), err)
+            sweetErrorHandling(err).then()
+        } }
     return (
         <TabPanel value={"2"}>
             <Stack>
@@ -58,7 +88,7 @@ export default function ProcessOrders() {
                                     <p className="data-compl">
                                     {moment().format("YY-MM-DD HH:mm")}
                                 </p>
-                                <Button variant={"contained"} className={"verify-btn"}>
+                                <Button variant={"contained"} className={"verify-btn"} onClick={proccesOrderHandler} value={order._id}>
                                     Verify to Fulfil
                                 </Button>
                                 </Box>
@@ -71,7 +101,7 @@ export default function ProcessOrders() {
                 {!proccesOrder || (proccesOrder.length === 0&& (
                     <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
                         <img
-                        src={"/icons/noimage.svg"}
+                        src={"/icons/noimage-list.svg"}
                         style={{width: 300 , height: 300}}/>
                     </Box>
                 ))}

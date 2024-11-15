@@ -12,9 +12,10 @@ const ContextProvider: React.FC<{children: ReactNode}> = ({children}) => {
     localStorage.getItem("memberData") ? JSON.parse(localStorage.getItem("memberData") as string) : null
   )
 
+  const [orderBuilder, setOrderBuilder] = useState<Date>(new Date())
   console.log("Verify ")
 
-  return (<GlobalContext.Provider value={{authMember, setAuthMember}}>{children}</GlobalContext.Provider>)
+  return (<GlobalContext.Provider value={{authMember, setAuthMember, orderBuilder, setOrderBuilder}}>{children}</GlobalContext.Provider>)
 }
 
 export default ContextProvider;
