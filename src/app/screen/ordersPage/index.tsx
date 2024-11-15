@@ -18,6 +18,8 @@ import { createSelector } from "reselect";
 import { retrieverPausedOrder } from "./selector";
 import { useGlobals } from "../../hooks/useGlobals";
 import { useHistory } from "react-router-dom";
+import { serverApi } from "../../../lib/data/config";
+import { MemberType } from "../../../lib/data/enums/member.enum";
 
 
 
@@ -103,18 +105,18 @@ export default function OrderPage() {
                     <Box className={"member-box"}>
                         <div className={"order-user-img"}>
                             <img 
-                            src="./icons/default-user.svg"
+                            src={authMember?.memberImage ? `${serverApi}/${authMember.memberImage}`: "/icons/default-user.svg" }
                             className="order-user-avatar"/>
                             <div className="order-user-icon-box">
                                 <img 
-                                src="./icons/user-badge.svg"
+                                src={authMember?.memberType === MemberType.RESTAURANT ? "/icons/restaurant.svg" : "/icons/user-badge.svg"}
                                 className="order-user-prof-img"/>
                             </div>
-                            <p className="order-user-name">User name</p>
+                            <p className="order-user-name">{authMember?.memberNick}</p>
                         </div>
                     </Box>
                     <div className="liner"/>
-                    <Box className={"user-location"}><LocationOnIcon/><p className="order-user-address">South Korea, Busan</p></Box>
+                    <Box className={"user-location"}><LocationOnIcon/><p className="order-user-address">{authMember?.memberAddress ? authMember.memberAddress : "no exist   "}</p></Box>
                 </Box>
             <Stack className="payment-card-box">
               <Stack className={"payment-info-box"}>

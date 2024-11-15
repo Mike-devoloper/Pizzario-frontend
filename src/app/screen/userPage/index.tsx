@@ -40,7 +40,7 @@ export default function UserPage() {
               >
                 <div className={"order-user-img"}>
                   <img
-                    src={authMember?.memberImage ? `${serverApi}/${authMember.memberImage}` : "/icons/default-ser.svg"}
+                    src={authMember?.memberImage ? `${serverApi}/${authMember.memberImage}` : "/icons/default-user.svg"}
                     className={"order-user-avatar"}
                   />
                   <div className={"order-user-icon-box"}>
