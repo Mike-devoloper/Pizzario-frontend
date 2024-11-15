@@ -14,7 +14,7 @@ import { serverApi } from "../../../lib/data/config"
 
 const pausedOrderRetriver = createSelector(retrieverPausedOrder,
     (pausedOrder) => ({pausedOrder}))
-{console.log(pausedOrderRetriver)}
+
 
 export default function PausedOrders() {
     const {pausedOrder} = useSelector(pausedOrderRetriver)
