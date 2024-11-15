@@ -1,7 +1,7 @@
 import { ArrowRightAlt } from "@mui/icons-material";
 import axios from "axios";
 import { serverApi } from "../../lib/data/config";
-import { LoginInput, Member, MemberInput } from "../../lib/data/types/member";
+import { LoginInput, Member, MemberInput, MemberUpdateInput } from "../../lib/data/types/member";
 
 
 class MemberService {
@@ -74,6 +74,34 @@ class MemberService {
             return result.data.logout;
         } catch(err) {
             console.log("ERROR on login ", err)
+            throw  err;
+        }
+    }
+
+    public async updateMember(input: MemberUpdateInput): Promise<Member> {
+        try {
+            const formData = new FormData()
+            formData.append("memberNick", input.memberNick || "")
+            formData.append("memberPhone", input.memberPhone || "")
+            formData.append("memberAddress", input.memberAddress || "")
+            formData.append("memberDesc", input.memberDesc || "")
+            formData.append("memberImage", input.memberImage || "")
+
+            const result = await axios(`${serverApi}/member/update`,{
+                method: "POST",
+                data: formData,
+                withCredentials: true,
+                headers:{
+                    "Content-Type": "mutipart/formdata",
+                },
+            });
+            console.log("updateMEmber ", result);
+            const member: Member = result.data;
+            localStorage.setItem("memberData", JSON.stringify(member))
+            return member;
+
+        } catch(err) {
+            console.log("ERROR on signup ", err)
             throw  err;
         }
     }

@@ -17,6 +17,7 @@ import OrderService from "../../services/OrderService";
 import { createSelector } from "reselect";
 import { retrieverPausedOrder } from "./selector";
 import { useGlobals } from "../../hooks/useGlobals";
+import { useHistory } from "react-router-dom";
 
 
 
@@ -35,7 +36,8 @@ const actionDispatch = (dispatch: Dispatch) => ({
 export default function OrderPage() {
     const {setPausedOrder, setProccesOrder, setFinishedOrder} = actionDispatch(useDispatch())
     const [value, setValue] = useState("1")
-    const {orderBuilder} = useGlobals()
+    const {orderBuilder, authMember} = useGlobals()
+    const history = useHistory()
     const handleChange = (e: SyntheticEvent, newValue: string) => {
         setValue(newValue)
     }
@@ -67,7 +69,7 @@ export default function OrderPage() {
 
     }, [orderInquiry, orderBuilder])
     /*Handler */
-
+    if(!authMember) history.push("/")
     return (
         <div className={"order-page"}>
             <Container className={"order-container"}>
