@@ -8,7 +8,10 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/data/types/search";
-import { serverApi } from "../../../lib/data/config";
+import { Messages, serverApi } from "../../../lib/data/config";
+import { sweetErrorHandling } from "../../../lib/data/sweetAlert";
+import { useGlobals } from "../../hooks/useGlobals";
+import OrderService from "../../services/OrderService";
 
 interface BasketProps {
   cartItems: CartItem[];
@@ -20,7 +23,7 @@ interface BasketProps {
 
 export default function Basket(props:BasketProps ) {
   const {cartItems, onAdd, onRemove, onDelete, onDeleteAll} = props;
-  const authMember = null;
+  const {authMember} = useGlobals();
   const history = useHistory();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -33,6 +36,28 @@ export default function Basket(props:BasketProps ) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const proceedOrderHandler = async () => {
+    try {
+      handleClose()
+      if(!authMember) throw new Error(Messages.error2)
+
+      const order = new OrderService()
+      await order.createOrder(cartItems);
+      onDeleteAll()
+
+      //REFRESH VIA CONTEXT
+
+      history.push("/orders")
+    } catch (err) {
+      console.log("error on ProceedOrderHandler");
+      sweetErrorHandling(err).then()
+
+    }
+  }
+
+
+
   const itemPrice: number = cartItems.reduce((a: number, c: CartItem) => a + c.price*c.quantity, 0)
   const shippingCost: number = itemPrice < 100 ? 5 : 0;
   const totalPrice = (shippingCost + itemPrice).toFixed(1);
@@ -104,7 +129,7 @@ export default function Basket(props:BasketProps ) {
               {cartItems.map((item:CartItem) => {
                 const imagePath = `${serverApi}/${item.image}`
                 return (
-                  <Box className={"basket-info-box"}>
+                  <Box className={"basket-info-box"} key={item._id}>
                   <div onClick={() => onDelete(item)} className={"cancel-btn"}>
                     <CancelIcon color={"primary"} />
                   </div>
@@ -113,7 +138,7 @@ export default function Basket(props:BasketProps ) {
                   <p className={"product-price"}>${item.price} x {item.quantity}</p>
                   <Box sx={{ minWidth: 120 }}>
                     <div className="col-2">
-                      <button onClick={() => onRemove(item)} className="remove">-</button>{" "}
+                      <button onClick={() => onRemove(item)} className="remove">-</button>
                       <button onClick={() => onAdd(item)} className="add">+</button>
                     </div>
                   </Box>
@@ -125,7 +150,7 @@ export default function Basket(props:BasketProps ) {
           {cartItems.length === 0 ? "" : (
              <Box className={"basket-order"}>
              <span className={"price"}>Total: ${totalPrice} ({itemPrice} +{shippingCost})</span>
-             <Button startIcon={<ShoppingCartIcon />} variant={"contained"}>
+             <Button startIcon={<ShoppingCartIcon />} variant={"contained"} onClick={proceedOrderHandler}>
                Order
              </Button>
            </Box>

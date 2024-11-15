@@ -1,4 +1,4 @@
-import {useState, SyntheticEvent} from "react";
+import {useState, SyntheticEvent, useEffect} from "react";
 import { Container, Stack, Box } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -10,8 +10,17 @@ import  ProcessOrders from "./ProcessOrders"
 import {useDispatch, useSelector} from "react-redux"
 import { Dispatch } from '@reduxjs/toolkit';
 import { setPausedOrder, setProccesOrder, setFinishedOrder} from "./slice";
-import { Order } from "../../../lib/data/types/order";
+import { Order, OrderInquiry } from "../../../lib/data/types/order";
 import "../../../css/order.css"
+import { OrderStatus } from "../../../lib/data/enums/order.enums";
+import OrderService from "../../services/OrderService";
+import { createSelector } from "reselect";
+import { retrieverPausedOrder } from "./selector";
+
+
+
+const PausedOrderRetriver = createSelector(retrieverPausedOrder,
+    (pausedOrder) => ({pausedOrder}))
 
 
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -28,7 +37,33 @@ export default function OrderPage() {
     const handleChange = (e: SyntheticEvent, newValue: string) => {
         setValue(newValue)
     }
+    const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
+        page: 1,
+        limit: 5,
+        orderStatus: OrderStatus.PAUSE
+    })
 
+    useEffect(() => {
+        const order = new OrderService()
+        order.getMyOrder({...orderInquiry, orderStatus: OrderStatus.PAUSE})
+        .then((data) => setPausedOrder(data))
+        .catch((err) => {
+            console.log("error on getmyorder", err)
+        })
+
+        order.getMyOrder({...orderInquiry, orderStatus: OrderStatus.PROCESS})
+        .then((data) => setProccesOrder(data))
+        .catch((err) => {
+            console.log("error on getmyorder", err)
+        })
+
+        order.getMyOrder({...orderInquiry, orderStatus: OrderStatus.FINISH})
+        .then((data) => setFinishedOrder(data))
+        .catch((err) => {
+            console.log("error on getmyorder", err)
+        }) 
+
+    }, [orderInquiry])
     /*Handler */
 
     return (
