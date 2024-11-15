@@ -11,7 +11,8 @@ import MemberService from "../../services/MemberService";
 
 export function Settings() {
   const {authMember, setAuthMember} = useGlobals();
-  const [memberImage, setmemberImage] = useState<string>(authMember?.memberImage ? `${serverApi}/${authMember.memberImage}`: "/icons/default-user.svg" )
+  const [memberImage, setmemberImage] = useState<string>(
+    authMember?.memberImage ? `${serverApi}/${authMember.memberImage}`: "/icons/default-user.svg" )
   const [memberUpdateInput, setMemberUpdateInput] = useState<MemberUpdateInput>({
     memberNick: authMember?.memberNick,
     memberPhone: authMember?.memberPhone,
