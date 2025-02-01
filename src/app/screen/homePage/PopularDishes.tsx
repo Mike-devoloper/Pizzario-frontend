@@ -16,15 +16,26 @@ import { Product } from "../../../lib/data/types/product";
 import ProductService from "../../services/ProductService";
 import { ProductCollection } from "../../../lib/data/enums/product.enums";
 import { serverApi } from "../../../lib/data/config";
+import { useHistory } from "react-router-dom";
 
 
 const PopularDishesRetriever = createSelector(retrieverPopularDishes,
     (popularDishes) => ({popularDishes}))
-
+    
+    const useNavigateToDetail = () => {
+        const history = useHistory();
+      
+        const goToDetail = (id: string) => {
+          history.push(`products/${id}`); 
+        };
+      
+        return { goToDetail };
+      };
 
 
 export default function PopularDishes() {
-    const {popularDishes} = useSelector(PopularDishesRetriever)
+    const {popularDishes} = useSelector(PopularDishesRetriever);
+    const {goToDetail} = useNavigateToDetail()
     return (
     <div className="popular-dishes-frame">
         <Container>
@@ -36,7 +47,7 @@ export default function PopularDishes() {
                     const imagePath = `${serverApi}/${ele.productImages[0]}`
                     return(
                         <CssVarsProvider key={ele._id}> 
-                    <Card className={"card"}>
+                    <Card className={"card"} onClick={() => goToDetail(ele._id)}>
                         <CardCover>
                             <img src={imagePath} alt="" />
                         </CardCover>
