@@ -1,14 +1,54 @@
+/*ANIMATIONS*/
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0px);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(100px); /* Start from below */
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0); /* Slide into original position */
+    opacity: 1;
+  }
+}
+
+
+
+/* background-color:rgba(174, 0, 0, 0.35) ; */
+
 .home-navbar {
     width: 100%;
     height: 773px;
     display: flex;
-    background:url("/public/img/banner.webp");
+    background-color:rgb(249, 162, 1);
     background-size: cover;
+
 }
 
 .home-navbar .home-container {
     margin-top: 55px;
-    height: 642px;
+    min-height: 642px;
+    animation: slideIn 0.6s ease-in 1 forwards;
+    will-change: transform;
 }
 
 .home-navbar .home-container .menu {
@@ -27,8 +67,18 @@
 }
 
 .home-navbar .home-container .menu .links .login-button{
-    background-color: #3776CC;
-    color: #f8f8ff
+  width: 140px;
+  height: 45px;
+  border-radius: 4px;
+  background: rgba(174, 0, 0, 1);
+  border: none;
+  text-align: center;
+  font-family: 'Verdana';
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  color: #f8f8ff;
 }
 
 .home-navbar .home-container .menu .user-avatar{
@@ -37,9 +87,19 @@
     border-radius: 24px;
 }
 
+.home-navbar .home-container .menu .logo-link {
+   width: 60px;
+   height: 60px;
+   background-color: rgba(174, 0, 0, 1);
+   border-radius: 50%;
+}
+
 .home-navbar .home-container .menu .brand-logo {
-   width: 125px;
-   height: 30px;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  padding-left: 10px;
+  padding-top: 5px;
 }
 
 .home-navbar a {
@@ -47,6 +107,10 @@
 }
 
 .home-navbar .hover-line a {
+    font-family: 'Verdana';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
     color: #f8f8ff;
     z-index: 100;
    }
@@ -54,13 +118,13 @@
    .home-navbar .underline {
     display: block;
     content: "";
-    border-bottom: solid 2px #d2b686;
+    border-bottom: solid 2px rgba(174, 0, 0, 1);
    }
 
    .home-navbar .hover-line:after {
     display: block;
     content: "";
-    border-bottom: solid 2px #d2b686;
+    border-bottom: solid 2px rgba(174, 0, 0, 1);
     transform: scaleX(0);
     transition: transform 250ms ease-in-out;
    }
@@ -74,102 +138,104 @@
    }
 
    .home-navbar .home-container .header-frame {
-     margin-top: 142px;
+     margin-top: 80px;
      height: 462px;
      display: flex;
      flex-direction: row;
      justify-content: space-between;
    }
 
-   .home-navbar .home-container .header-frame .detail {
+   .home-navbar .home-container .header-frame .hero{
     width: 510px;
     display: flex;
     flex-direction: column;
   }
 
-  .home-navbar .home-container .header-frame .detail .head-main-text {
+  .home-navbar .home-container .header-frame .hero .header-text {
    width: 450px;
    height: 150px;
-   font-family: "Roboto Serif";
+   font-family: Verdana,Tahoma, sans-serif;
    font-size: 50px;
    font-style: normal;
-   font-weight: 500;
+   font-weight: 750;
    line-height: normal;
    letter-spacing: -0.75px;
+   padding-top: 30px;
    color: #f8f8ff;
   }
 
-  .home-navbar .home-container .header-frame .detail .wel-txt {
+  .home-navbar .home-container .header-frame .hero .heading .text-primary {
+    font-family: Verdana,Tahoma, sans-serif;
+   font-size: 60px;
+   font-style: normal;
+   font-weight: 800;
+   letter-spacing: -0.75px;
+   padding-top: 40px;
+    color: rgba(174, 0, 0, 1);
+  }
+
+  .home-navbar .home-container .header-frame .hero  .desc {
     width: 510px;
     height: 42px;
     font-family: "Roboto Serif";
-    font-size: 36px;
+    font-size: 25px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     line-height: normal;
     letter-spacing: -0.54px;
-    color: #d7b686;
+    color: white;
    }
 
-   .home-navbar .home-container .header-frame .detail .service-txt {
-    margin-top: 23px;
-    width: 153px;
-    height: 23px;
-    font-family: "Roboto Serif";
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    letter-spacing: -0.3px;
-    color: #d5d5d5;
-   }
 
-   .home-navbar .home-container .header-frame .detail .signup {
-    margin-top: 73px;
-   }
 
-   .home-navbar .home-container .header-frame .detail .signup .signup-button {
-    width: 210px;
-    height: 60px;
+   .home-navbar .home-container .header-frame .hero .btn-group .signup-btn {
+    width: 150px;
+    height: 50px;
     border-radius: 4px;
-    background: #1976d2;
+    background: rgba(174, 0, 0, 1);
+    border: none;
     text-align: center;
-    font-family: 'Poppins';
-    font-size: 17px;
+    font-family: 'Verdana';
+    font-size: 15px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     line-height: normal;
     color: #f8f8ff;
    }
 
-   .home-navbar .home-container  .logo-frame {
-    margin-top: 43px;
-    width: 690px;
-    height: 419;
+   .home-navbar .home-container .header-frame .hero .btn-group .order-btn {
+    width: 150px;
+    height: 50px;
+    border-radius: 4px;
+    background: rgba(174, 0, 0, 1);
+    border: none;
+    text-align: center;
+    font-family: 'Verdana';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    color: #f8f8ff;
    }
 
-   .home-navbar .home-container  .logo-frame .logo-img {
-    width: 100%;
-    height: 100%;
-    background: url("/public/img/logo.webp");
-    background-size: contain;
-    background-repeat: no-repeat;
-    filter: invert(25%);
-
-   }
 
 
 
-
-
+.home-navbar .home-container .header-frame .hero-img .pizza {
+  width: 500px;
+  border-radius: 50%;
+  animation: rotate 15s linear infinite;
+}
 
 
    .other-navbar {
     width: 100%;
     height: 400px;
     display: flex;
-    background:url("/public/img/banner.webp");
-    background-size: cover;
+    background-image: url("/public/img/bg-otherNavbar.jpg");
+    background-size: cover ;
+    background-color: rgba(17, 16, 16, 0.6);
+    background-blend-mode: darken;
 }
 
 .other-navbar .home-container {
@@ -183,6 +249,8 @@
     align-items: center;
 }
 
+
+
 .other-navbar .home-container .menu .links {
     min-width: 700px;
     display: flex;
@@ -192,8 +260,18 @@
 }
 
 .other-navbar .home-container .menu .links .login-button{
-    background-color: #3776CC;
-    color: #f8f8ff
+  width: 140px;
+  height: 45px;
+  border-radius: 4px;
+  background: rgba(174, 0, 0, 1);
+  border: none;
+  text-align: center;
+  font-family: 'Verdana';
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  color: #f8f8ff;
 }
 
 .other-navbar .home-container .menu .user-avatar{
@@ -202,9 +280,19 @@
     border-radius: 24px;
 }
 
+.other-navbar .home-container .menu .logo-link {
+  width: 60px;
+   height: 60px;
+   background-color: rgba(174, 0, 0, 1);
+   border-radius: 50%;
+}
+
 .other-navbar .home-container .menu .brand-logo {
-   width: 125px;
-   height: 30px;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  padding-left: 10px;
+  padding-top: 5px;
 }
 
 .other-navbar a {
@@ -212,20 +300,24 @@
 }
 
 .other-navbar .hover-line a {
-    color: #f8f8ff;
-    z-index: 100;
+  font-family: 'Verdana';
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  color: #f8f8ff;
+  z-index: 100;
    }
 
    .other-navbar .underline {
     display: block;
     content: "";
-    border-bottom: solid 2px #d2b686;
+    border-bottom: solid 2px rgb(241, 161, 23);
    }
 
    .other-navbar .hover-line:after {
     display: block;
     content: "";
-    border-bottom: solid 2px #d2b686;
+    border-bottom: solid 2px rgb(241, 161, 23);
     transform: scaleX(0);
     transition: transform 250ms ease-in-out;
    }
@@ -267,6 +359,13 @@
     border-style: solid;
     border-color: #343434;
   }
+
+  .basket-frame .all-check-box .empty-card {
+    font-size: 16px;
+    font-family: Verdana;
+    font-weight: 600;
+    color: #000000;
+  }
   
   .basket-frame .basket-info-box {
     position: relative;
@@ -288,17 +387,17 @@
   .basket-info-box .product-name {
     margin-left: 11px;
     width: 185px;
-    font-family: "Poppins";
+    font-family: "Verdana";
     font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
+    font-weight: 600;
+    font-size: 18px;
     line-height: 30px;
     color: #000000;
   }
   
   .basket-info-box .product-price {
     width: 80px;
-    font-family: "Poppins";
+    font-family: "Verdana";
     font-style: normal;
     font-weight: 600;
     font-size: 15px;
@@ -336,10 +435,10 @@
   .basket-order .price {
     width: 200px;
     display: flex;
-    font-family: "Poppins";
+    font-family: "Verdana";
     font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
+    font-weight: 600;
+    font-size: 15px;
     line-height: 30px;
     color: #000000;
   }

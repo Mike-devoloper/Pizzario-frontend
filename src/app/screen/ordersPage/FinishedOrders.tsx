@@ -36,7 +36,7 @@ export default function FinishedOrders() {
                                     return (
                                         <Box className={"orders-name-price"}>
                                             <img 
-                                            src="/img/kebab.webp"
+                                            src={imagePath}
                                             className="order-dish-img"/>
                                             <p className="title-dish">{product.productName}</p>
                                             <Box className={"price-box"}>

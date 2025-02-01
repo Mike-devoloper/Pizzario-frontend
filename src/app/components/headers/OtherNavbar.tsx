@@ -34,9 +34,9 @@ export default function OtherNavbar (props: OtherNavbarProps) {
     return <div className="other-navbar">
       <Container className="home-container">
         <Stack className="menu">
-          <Box>
+          <Box className={"logo-link"}>
             <NavLink to="/">
-              <img src="/icons/burak.svg" className="brand-logo"></img>
+              <img src="/icons/pizza-logo.png" className="brand-logo"></img>
             </NavLink>
           </Box>
           <Stack className="links">

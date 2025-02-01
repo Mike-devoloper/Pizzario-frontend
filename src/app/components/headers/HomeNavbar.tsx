@@ -1,6 +1,6 @@
-import { Stack, Container, Button, Menu, MenuItem, ListItemIcon } from "@mui/material";
+import { Stack, Container, Button, Menu, MenuItem, ListItemIcon, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import Basket from "./Basket";
 import React, {useState, useEffect} from "react"
 import { CartItem } from "../../../lib/data/types/search";
@@ -20,16 +20,29 @@ interface HomeNavbarProps {
   handleLogoutRequest: () => void
   anchorEl: HTMLElement | null
 }
+const useNavigateToOrder = () => {
+  const history = useHistory();
+
+  const goToOrderPage = () => {
+    history.push('/products'); 
+  };
+
+  return { goToOrderPage };
+};
+
+
+
 export default function HomeNavbar (props: HomeNavbarProps) {
   const {authMember} = useGlobals();
+  const {goToOrderPage} = useNavigateToOrder()
   const {cartItems, onAdd, onRemove, onDelete, onDeleteAll, setSignupOpen, setLoginOpen, handleLogoutClick, handleCloseLogout, anchorEl, handleLogoutRequest} = props;
 
   return <div className="home-navbar">
     <Container className="home-container">
       <Stack className="menu">
-        <Box>
+        <Box className="logo-link">
           <NavLink to="/">
-            <img src="/icons/burak.svg" className="brand-logo"></img>
+            <img src="/icons/pizza-logo.png" className="brand-logo"></img>
           </NavLink>
         </Box>
         <Stack className="links">
@@ -108,25 +121,32 @@ export default function HomeNavbar (props: HomeNavbarProps) {
 </Menu>
         </Stack>
       </Stack>
-      <Stack className={"header-frame"}>
-        <Stack className={"detail"}>
-          <Box className={"head-main-text"}>
-            World's Most Delicious Cousine
-            </Box>
-          <Box className={"wel-txt"}>The Choice, not Just a choice</Box>
-          <Box className={"service-txt"}>24 hours service</Box>
-          <Box className={"signup"}>
-            {!authMember ? 
-            (<Button 
-            variant="contained" 
-            className="signup-button" onClick={() => setSignupOpen(true)}>SIGN UP</Button>
-            ) : null}
+      <Stack className="header-frame">
+        <Stack className="hero">
+          <Box className="heading">
+            <Typography variant="h1" className="header-text">Everything is better with a</Typography>
+              <span className="text-primary">
+                Pizza
+              </span>
+          </Box>
+          <p className="desc">
+            Pizza is the missing piece that makes every day complete, a simple yet delicious joy in life
+          </p>
+          <Box className="btn-group">
+            {!authMember ? (
+            <Button className="signup-btn" variant="contained" onClick={() => setSignupOpen(true)}>
+                Signup
+            </Button>) : (
+              <Button className="order-btn" onClick={goToOrderPage}>
+              Order now
+            </Button>
+            )}
           </Box>
         </Stack>
-        <Box className={"logo-frame"}>
-          <div className={"logo-img"}></div>
-        </Box>
-      </Stack>
+        <Stack className="hero-img">
+          <img className="pizza" src={'/img/pizza.png'}  style={{ objectFit: 'contain'}}  alt={'pizza'} />
+        </Stack>
+    </Stack>
     </Container>
   </div>
 }

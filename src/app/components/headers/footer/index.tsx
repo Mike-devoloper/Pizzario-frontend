@@ -7,7 +7,7 @@ const Footers = styled.div`
   width: 100%;
   height: 590px;
   display: flex;
-  background: #343434;
+  background: rgba(174, 0, 0, 1);
   background-size: cover;
 `;
 
@@ -20,12 +20,12 @@ export default function Footer() {
         <Stack flexDirection={"row"} sx={{ mt: "94px" }}>
           <Stack flexDirection={"column"} style={{ width: "340px" }}>
             <Box>
-              <img width={"100px"} src={"/icons/burak.svg"} />
+             <div className="footer-title">Pizza</div>
             </Box>
             <Box className={"foot-desc-txt"}>
-              Focusing on the gourmet Turkish breakfast as well as the youth
-              society, CZN Burak Gurme aims to bring Turkish cuisine back. CZN
-              Burak Gurme creates an illusion with its cuisine.
+            Infusing the vibrant spirit of youth with the rich flavors of tradition,
+              Pizza Hub redefines the art of pizza-making. 
+             A place where bold creations meet timeless recipes, bringing a taste experience like no other
             </Box>
             <Box className="sns-context">
               <img src={"/icons/facebook.svg"} />
@@ -65,7 +65,7 @@ export default function Footer() {
                   </Box>
                   <Box className={"find-us"}>
                     <span>E.</span>
-                    <div>devexuz@gmail.com</div>
+                    <div>ismoiljontursunov55@gmail.com</div>
                   </Box>
                   <Box className={"find-us"}>
                     <span>H.</span>
@@ -81,7 +81,7 @@ export default function Footer() {
           sx={{ mt: "80px" }}
         ></Stack>
         <Stack className={"copyright-txt"}>
-          © Copyright Devex Global, All rights reserved.
+          © Copyright , All rights reserved.
         </Stack>
       </Container>
     </Footers>
